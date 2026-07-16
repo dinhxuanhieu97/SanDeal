@@ -1,21 +1,17 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { chromium } from 'playwright';
+import { launchBrowser, browserName } from './helpers/browser.mjs';
 import { createApp } from '../server.js';
 
 let server;
 let browser;
 let baseURL;
 
-// Trong sandbox có thể chỉ định đường dẫn chromium qua PW_CHROMIUM.
-// Trên máy người dùng: chạy `npx playwright install chromium` rồi để trống.
-const launchOpts = process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {};
-
 before(async () => {
   const app = createApp({ subId: 'sandeal' });
   await new Promise((r) => (server = app.listen(0, r)));
   baseURL = `http://localhost:${server.address().port}`;
-  browser = await chromium.launch(launchOpts);
+  browser = await launchBrowser();
 });
 
 after(async () => {
@@ -57,7 +53,10 @@ test('E2E: link không hợp lệ hiển thị thông báo lỗi', async () => {
 });
 
 test('E2E: nút "Sao chép" đổi trạng thái sau khi bấm', async () => {
-  const page = await browser.newPage({ permissions: ['clipboard-read', 'clipboard-write'] });
+  // Firefox/WebKit không hỗ trợ grant quyền clipboard qua Playwright — chỉ grant trên chromium
+  const page = await browser.newPage(
+    browserName === 'chromium' ? { permissions: ['clipboard-read', 'clipboard-write'] } : {}
+  );
   await page.goto(baseURL);
   await page.fill('#shopee-url', 'https://shopee.vn/product/1/2');
   await page.click('#convert-btn');

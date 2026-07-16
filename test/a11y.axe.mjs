@@ -1,19 +1,18 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { chromium } from 'playwright';
+import { launchBrowser } from './helpers/browser.mjs';
 import { AxeBuilder } from '@axe-core/playwright';
 import { createApp } from '../server.js';
 
 let server;
 let browser;
 let baseURL;
-const launchOpts = process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {};
 
 before(async () => {
   const app = createApp({ subId: 'sandeal' });
   await new Promise((r) => (server = app.listen(0, r)));
   baseURL = `http://localhost:${server.address().port}`;
-  browser = await chromium.launch(launchOpts);
+  browser = await launchBrowser();
 });
 
 after(async () => {

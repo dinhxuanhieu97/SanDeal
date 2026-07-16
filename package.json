@@ -12,6 +12,9 @@
     "test:api": "node --test test/api.test.mjs",
     "test:e2e": "node --test test/e2e.spec.mjs test/a11y.axe.mjs test/responsive.spec.mjs",
     "test:visual": "node --test test/visual.spec.mjs",
+    "test:e2e:firefox": "PW_BROWSER=firefox node --test test/e2e.spec.mjs test/a11y.axe.mjs test/responsive.spec.mjs",
+    "test:e2e:webkit": "PW_BROWSER=webkit node --test test/e2e.spec.mjs test/a11y.axe.mjs test/responsive.spec.mjs",
+    "test:e2e:all": "npm run test:e2e && npm run test:e2e:firefox && npm run test:e2e:webkit",
     "perf": "node scripts/perf.mjs"
   },
   "keywords": [
