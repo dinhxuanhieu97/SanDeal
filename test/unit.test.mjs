@@ -75,3 +75,16 @@ test('buildOfficialShortLink: ném lỗi khi API trả về error', async () => 
     /Sai credentials/
   );
 });
+
+test('buildOfficialShortLink: API trả body rỗng → lỗi mặc định "Không tạo được shortlink"', async () => {
+  const fakeFetch = async () => ({ json: async () => ({}) });
+  await assert.rejects(
+    buildOfficialShortLink('https://shopee.vn/p/1', {
+      appId: 'a',
+      appSecret: 'b',
+      timestamp: 1700000000,
+      fetchImpl: fakeFetch,
+    }),
+    /Không tạo được shortlink/
+  );
+});

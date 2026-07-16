@@ -68,3 +68,11 @@ test('Trang chủ phục vụ file tĩnh (index.html)', async () => {
   assert.equal(res.status, 200);
   assert.match(html, /Săn Deal/);
 });
+
+test('GET /huong-dan-su-dung (route thân thiện SEO) trả về trang HTML hướng dẫn', async () => {
+  const res = await fetch(`${baseURL}/huong-dan-su-dung`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.match(res.headers.get('content-type'), /text\/html/);
+  assert.match(html, /Hướng dẫn sử dụng/i);
+});
