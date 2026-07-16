@@ -19,7 +19,12 @@ export function createApp(config = {}) {
   const UPSTREAM_TIMEOUT_MS = config.upstreamTimeoutMs ?? 5000;
 
   const app = express();
-  app.use(express.json());
+  // Chạy sau proxy (Vercel/CDN): tin 1 hop để req.ip lấy đúng IP người dùng
+  // từ X-Forwarded-For — thiếu dòng này rate-limit sẽ gộp mọi user làm 1 IP.
+  app.set('trust proxy', 1);
+  // Không lộ header "X-Powered-By: Express" (giảm fingerprinting)
+  app.disable('x-powered-by');
+  app.use(express.json({ limit: '10kb' })); // body chỉ cần chứa 1 URL — chặn payload lớn
   app.use(express.static(path.join(__dirname, 'public')));
 
   // Route thân thiện SEO cho trang hướng dẫn (không cần đuôi .html)
@@ -65,13 +70,15 @@ export function createApp(config = {}) {
       const link = buildDemoLink(url, SUB_ID);
       return res.json({ ok: true, mode: 'demo', originUrl: url, convertedUrl: link });
     } catch (err) {
+      // Log chi tiết phía server; KHÔNG trả err.message thô cho client (tránh lộ nội bộ)
+      console.error('[convert] Shopee API lỗi:', err.message);
       const fallback = buildDemoLink(url, SUB_ID);
       return res.json({
         ok: true,
         mode: 'demo-fallback',
         originUrl: url,
         convertedUrl: fallback,
-        note: 'API chính thức lỗi (' + err.message + '), tạm dùng link demo.',
+        note: 'API chính thức tạm thời lỗi, đã dùng link demo (vẫn gắn sub_id).',
       });
     }
   });
