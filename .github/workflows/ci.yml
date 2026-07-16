@@ -24,11 +24,13 @@ jobs:
       - name: Unit + Integration + Rate-limit test
         run: npm test
 
-      - name: Cài trình duyệt cho Playwright
-        run: npx playwright install --with-deps chromium
+      - name: Cài trình duyệt cho Playwright (Chromium + Firefox + WebKit)
+        run: npx playwright install --with-deps chromium firefox webkit
 
-      - name: E2E + Accessibility (axe-core)
-        run: npm run test:e2e
+      - name: E2E + Accessibility (axe-core) — cả 3 engine
+        run: npm run test:e2e:all
+        # Visual regression (test:visual) KHÔNG chạy trong CI:
+        # baseline chụp trên macOS, render Linux sẽ khác pixel → false positive.
 
   lighthouse:
     name: Lighthouse (SEO / Performance / A11y)
