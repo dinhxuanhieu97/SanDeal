@@ -2,3 +2,6 @@ node_modules/
 .env
 *.log
 .DS_Store
+
+# Visual regression: ảnh diff sinh ra khi test fail
+test/__screenshots__/diff/
