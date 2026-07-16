@@ -15,6 +15,8 @@ export function createApp(config = {}) {
   const SUB_ID = config.subId ?? process.env.SHOPEE_SUB_ID ?? 'sandeal';
   const APP_ID = config.appId ?? process.env.SHOPEE_APP_ID ?? '';
   const APP_SECRET = config.appSecret ?? process.env.SHOPEE_APP_SECRET ?? '';
+  // Ngưỡng chờ API Shopee trước khi rơi về demo-fallback (chaos test dùng giá trị nhỏ)
+  const UPSTREAM_TIMEOUT_MS = config.upstreamTimeoutMs ?? 5000;
 
   const app = express();
   app.use(express.json());
@@ -52,7 +54,12 @@ export function createApp(config = {}) {
     const hasCredentials = APP_ID && APP_SECRET;
     try {
       if (hasCredentials) {
-        const link = await buildOfficialShortLink(url, { appId: APP_ID, appSecret: APP_SECRET, subId: SUB_ID });
+        const link = await buildOfficialShortLink(url, {
+          appId: APP_ID,
+          appSecret: APP_SECRET,
+          subId: SUB_ID,
+          timeoutMs: UPSTREAM_TIMEOUT_MS,
+        });
         return res.json({ ok: true, mode: 'official', originUrl: url, convertedUrl: link });
       }
       const link = buildDemoLink(url, SUB_ID);
