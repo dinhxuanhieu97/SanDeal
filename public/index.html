@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== SEO ===== -->
+  <title>Săn Deal – Dán link Shopee, tự động nhận voucher & hoàn tiền</title>
+  <meta name="description" content="Dán link Shopee bất kỳ, Săn Deal tự động gắn mã ưu đãi độc quyền và hoàn tiền tối đa cho bạn. Miễn phí, nhanh trong 3 giây, không cần cài đặt." />
+  <meta name="keywords" content="săn deal, voucher shopee, chuyển link shopee, hoàn tiền shopee, mã giảm giá shopee, affiliate shopee" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#FF3D77" />
+  <link rel="canonical" href="https://sandeal.vn/" />
+
+  <!-- ===== Open Graph / Facebook ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Săn Deal – Dán link Shopee, tự động nhận voucher & hoàn tiền" />
+  <meta property="og:description" content="Dán link Shopee bất kỳ, nhận ngay mã ưu đãi độc quyền và hoàn tiền tối đa. Miễn phí, nhanh trong 3 giây." />
+  <meta property="og:url" content="https://sandeal.vn/" />
+  <meta property="og:image" content="https://sandeal.vn/og-image.png" />
+  <meta property="og:locale" content="vi_VN" />
+  <meta property="og:site_name" content="Săn Deal" />
+
+  <!-- ===== Twitter ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Săn Deal – Dán link Shopee, tự động nhận voucher & hoàn tiền" />
+  <meta name="twitter:description" content="Dán link Shopee, nhận voucher độc quyền và hoàn tiền tối đa. Miễn phí, nhanh trong 3 giây." />
+  <meta name="twitter:image" content="https://sandeal.vn/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- ===== Structured data (SEO) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Săn Deal",
+    "url": "https://sandeal.vn/",
+    "applicationCategory": "ShoppingApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "VND" },
+    "description": "Chuyển link Shopee để tự động nhận voucher độc quyền và hoàn tiền."
+  }
+  </script>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Săn Deal - Trang chủ">
+        <img src="/logo.svg" alt="Săn Deal" height="40" />
+      </a>
+      <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="main-nav" aria-label="Menu chính">
+        <a href="#cach-hoat-dong">Cách hoạt động</a>
+        <a href="#uu-dai">Ưu đãi hot</a>
+        <a href="/huong-dan-su-dung">Hướng dẫn</a>
+        <a href="#faq">Hỏi đáp</a>
+        <a href="#lien-he">Liên hệ</a>
+      </nav>
+      <a href="#san" class="btn btn-ghost nav-cta">Săn Deal ngay</a>
+    </div>
+  </header>
+
+  <!-- ===== Hero + công cụ chuyển link ===== -->
+  <main id="top">
+    <section class="hero" id="san">
+      <div class="container hero-inner">
+        <span class="badge">🔥 Miễn phí &amp; không cần đăng nhập</span>
+        <h1>Dán link Shopee — <span class="grad">săn ngay voucher &amp; hoàn tiền</span></h1>
+        <p class="lead">
+          Dán bất kỳ link sản phẩm Shopee nào vào ô bên dưới. Săn Deal tự động gắn ưu đãi
+          và trả về cho bạn một link mua hàng đã tối ưu giảm giá. Nhanh trong 3 giây.
+        </p>
+
+        <form class="converter" id="convert-form" autocomplete="off">
+          <input
+            type="url"
+            id="shopee-url"
+            name="url"
+            placeholder="Dán link Shopee vào đây, ví dụ: https://shopee.vn/..."
+            aria-label="Link Shopee"
+            required
+          />
+          <button type="submit" class="btn btn-primary" id="convert-btn">Săn Deal ngay</button>
+        </form>
+
+        <div class="result" id="result" hidden>
+          <div class="result-head">
+            <span class="result-label">✅ Link đã tối ưu ưu đãi:</span>
+            <span class="result-mode" id="result-mode"></span>
+          </div>
+          <div class="result-row">
+            <input type="text" id="result-url" readonly />
+            <button type="button" class="btn btn-copy" id="copy-btn">Sao chép</button>
+            <a href="#" target="_blank" rel="noopener" class="btn btn-open" id="open-btn">Mở link</a>
+          </div>
+          <p class="result-note" id="result-note"></p>
+        </div>
+
+        <p class="error" id="error" hidden></p>
+
+        <ul class="hero-stats">
+          <li><strong>3 giây</strong><span>tốc độ xử lý</span></li>
+          <li><strong>0đ</strong><span>hoàn toàn miễn phí</span></li>
+          <li><strong>100%</strong><span>an toàn, không lưu link</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Cách hoạt động ===== -->
+    <section class="section" id="cach-hoat-dong">
+      <div class="container">
+        <h2 class="section-title">Chỉ 3 bước để săn deal</h2>
+        <div class="steps">
+          <article class="step">
+            <div class="step-num">1</div>
+            <h3>Sao chép link Shopee</h3>
+            <p>Mở app hoặc web Shopee, chọn sản phẩm bạn thích và bấm "Sao chép liên kết".</p>
+          </article>
+          <article class="step">
+            <div class="step-num">2</div>
+            <h3>Dán vào Săn Deal</h3>
+            <p>Dán link vào ô ở trên rồi bấm "Săn Deal ngay". Hệ thống tự tìm ưu đãi tốt nhất.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">3</div>
+            <h3>Mua &amp; nhận hoàn tiền</h3>
+            <p>Mở link đã tối ưu, đặt hàng như bình thường và nhận voucher, hoàn tiền tự động.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Ưu đãi hot ===== -->
+    <section class="section section-alt" id="uu-dai">
+      <div class="container">
+        <h2 class="section-title">Ưu đãi đang hot</h2>
+        <p class="section-sub">Cập nhật các ngành hàng có mức hoàn tiền cao nhất tuần này.</p>
+        <div class="deals">
+          <article class="deal-card">
+            <div class="deal-tag">Tới 15%</div>
+            <h3>Thời trang &amp; Phụ kiện</h3>
+            <p>Hoàn tiền cao cho áo quần, giày dép, túi xách các shop Mall.</p>
+          </article>
+          <article class="deal-card">
+            <div class="deal-tag">Tới 12%</div>
+            <h3>Sức khỏe &amp; Làm đẹp</h3>
+            <p>Mỹ phẩm, skincare chính hãng kèm voucher độc quyền.</p>
+          </article>
+          <article class="deal-card">
+            <div class="deal-tag">Tới 10%</div>
+            <h3>Nhà cửa &amp; Đời sống</h3>
+            <p>Đồ gia dụng, nội thất, dụng cụ bếp giảm sâu mỗi ngày.</p>
+          </article>
+          <article class="deal-card">
+            <div class="deal-tag">Tới 8%</div>
+            <h3>Công nghệ &amp; Điện tử</h3>
+            <p>Phụ kiện điện thoại, laptop, thiết bị thông minh.</p>
+          </article>
+        </div>
+        <p class="section-sub small">* Mức hoàn tiền thay đổi theo chương trình của Shopee từng thời điểm.</p>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section" id="faq">
+      <div class="container narrow">
+        <h2 class="section-title">Câu hỏi thường gặp</h2>
+        <details class="faq-item" open>
+          <summary>Săn Deal có mất phí không?</summary>
+          <p>Hoàn toàn miễn phí. Bạn không phải trả thêm bất kỳ khoản nào so với mua trực tiếp trên Shopee.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Tại sao dùng link của Săn Deal lại có ưu đãi hơn?</summary>
+          <p>Săn Deal gắn thêm mã ưu đãi từ chương trình đối tác của Shopee vào link, nhờ đó bạn có thể nhận voucher và hoàn tiền mà giá sản phẩm vẫn giữ nguyên.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Thông tin của tôi có an toàn không?</summary>
+          <p>Có. Chúng tôi không yêu cầu đăng nhập, không lưu trữ link bạn dán và không thu thập dữ liệu cá nhân.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Đặt hàng và thanh toán ở đâu?</summary>
+          <p>Bạn vẫn đặt và thanh toán trực tiếp trên Shopee như bình thường. Săn Deal chỉ giúp tối ưu link trước khi bạn mua.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="lien-he">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="/logo.svg" alt="Săn Deal" height="36" />
+        <p>Công cụ săn voucher &amp; hoàn tiền Shopee miễn phí cho người Việt.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Liên kết</h3>
+        <a href="#cach-hoat-dong">Cách hoạt động</a>
+        <a href="#uu-dai">Ưu đãi hot</a>
+        <a href="/huong-dan-su-dung">Hướng dẫn sử dụng</a>
+        <a href="#faq">Hỏi đáp</a>
+      </div>
+      <div class="footer-col">
+        <h3>Liên hệ</h3>
+        <a href="mailto:hello@sandeal.vn">hello@sandeal.vn</a>
+        <a href="#san">Săn deal ngay</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 Săn Deal. Không phải trang chính thức của Shopee.</span>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

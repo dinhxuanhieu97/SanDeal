@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Không cho index các endpoint API
+Disallow: /api/
+
+Sitemap: https://sandeal.vn/sitemap.xml

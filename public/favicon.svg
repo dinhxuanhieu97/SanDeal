@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Săn Deal">
+  <defs>
+    <linearGradient id="f-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF7A59"/>
+      <stop offset="1" stop-color="#FF3D77"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#f-grad)"/>
+  <circle cx="28" cy="27" r="14" fill="none" stroke="#fff" stroke-width="4.5"/>
+  <path d="M38 37 L48 47" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(20,19)" fill="#fff">
+    <path d="M2 2 h8 a2 2 0 0 1 1.4 0.6 l4.5 4.5 a2 2 0 0 1 0 2.8 l-5.5 5.5 a2 2 0 0 1 -2.8 0 l-4.5 -4.5 A2 2 0 0 1 2 9 V3 a1 1 0 0 1 1 -1 z"/>
+    <circle cx="5.5" cy="5.5" r="1.5" fill="url(#f-grad)"/>
+  </g>
+</svg>
