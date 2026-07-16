@@ -3,7 +3,13 @@ import rateLimit from 'express-rate-limit';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
-import { isShopeeUrl, buildDemoLink, buildOfficialShortLink } from './lib/shopee.js';
+import {
+  isShopeeUrl,
+  buildDemoLink,
+  buildOfficialShortLink,
+  parseShopeeIds,
+  queryProductOffer,
+} from './lib/shopee.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -43,6 +49,23 @@ export function createApp(config = {}) {
       res.status(429).json({ ok: false, error: 'Bạn thao tác quá nhanh, vui lòng thử lại sau ít giây.' }),
   });
   app.use('/api/convert', limiter);
+  app.use('/api/product', limiter);
+
+  function demoProduct(url, ids) {
+    return {
+      productName: 'Sản phẩm Shopee (demo — cắm credentials để lấy dữ liệu thật)',
+      shopName: 'Shopee',
+      priceMin: null,
+      priceMax: null,
+      imageUrl: '',
+      commissionRate: null,
+      sales: null,
+      ratingStar: null,
+      offerLink: buildDemoLink(url, SUB_ID),
+      shopId: ids.shopId,
+      itemId: ids.itemId,
+    };
+  }
 
   app.post('/api/convert', async (req, res) => {
     const { url } = req.body || {};
@@ -79,6 +102,46 @@ export function createApp(config = {}) {
         originUrl: url,
         convertedUrl: fallback,
         note: 'API chính thức tạm thời lỗi, đã dùng link demo (vẫn gắn sub_id).',
+      });
+    }
+  });
+
+  app.post('/api/product', async (req, res) => {
+    const { url } = req.body || {};
+    if (!url || typeof url !== 'string') {
+      return res.status(400).json({ ok: false, error: 'Vui lòng nhập link Shopee.' });
+    }
+    if (!isShopeeUrl(url)) {
+      return res.status(400).json({ ok: false, error: 'Đây không phải link Shopee hợp lệ.' });
+    }
+    const ids = parseShopeeIds(url);
+    if (!ids) {
+      return res.status(422).json({
+        ok: false,
+        error:
+          'Không đọc được mã sản phẩm từ link. Hãy dùng link sản phẩm dạng shopee.vn/...-i.SHOPID.ITEMID (không phải link rút gọn s.shopee.vn).',
+      });
+    }
+
+    if (!(APP_ID && APP_SECRET)) {
+      return res.json({ ok: true, mode: 'demo', product: demoProduct(url, ids) });
+    }
+    try {
+      const node = await queryProductOffer({
+        itemId: ids.itemId,
+        shopId: ids.shopId,
+        appId: APP_ID,
+        appSecret: APP_SECRET,
+        timeoutMs: UPSTREAM_TIMEOUT_MS,
+      });
+      return res.json({ ok: true, mode: 'official', product: node });
+    } catch (err) {
+      console.error('[product] Shopee API lỗi:', err.message);
+      return res.json({
+        ok: true,
+        mode: 'demo-fallback',
+        product: demoProduct(url, ids),
+        note: 'API sản phẩm tạm thời lỗi, hiển thị tạm.',
       });
     }
   });

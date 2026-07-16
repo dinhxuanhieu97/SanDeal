@@ -12,6 +12,7 @@
   const errorEl = document.getElementById('error');
   const dealNote = document.getElementById('deal-note');
   const variantsEl = document.getElementById('variants');
+  const productCard = document.getElementById('product-card');
   let currentUrl = '';
 
   const MODE_LABEL = {
@@ -58,6 +59,7 @@
       renderVariants();
       result.hidden = false;
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      fetchProduct(url);
     } catch (err) {
       showError('Không kết nối được máy chủ. Kiểm tra server đang chạy chưa?');
     } finally {
@@ -132,5 +134,80 @@
       btn.textContent = 'Đã chép ✓';
       setTimeout(() => (btn.textContent = old), 1500);
     });
+  }
+
+  // ===== Thẻ sản phẩm (từ Shopee Affiliate API) =====
+  function fmtPrice(v) {
+    const n = Number(v);
+    if (v == null || !isFinite(n) || n <= 0) return '';
+    return n.toLocaleString('vi-VN') + 'đ';
+  }
+
+  async function fetchProduct(url) {
+    if (!productCard) return;
+    productCard.hidden = false;
+    productCard.textContent = 'Đang lấy thông tin sản phẩm…';
+    productCard.className = 'product-card product-loading';
+    try {
+      const res = await fetch('/api/product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+      const data = await res.json();
+      if (!data.ok || !data.product) {
+        productCard.textContent = data.error || 'Chưa lấy được thông tin sản phẩm.';
+        return;
+      }
+      renderProduct(data.product, data.mode);
+    } catch {
+      productCard.textContent = 'Không lấy được thông tin sản phẩm.';
+    }
+  }
+
+  function renderProduct(p, mode) {
+    productCard.className = 'product-card';
+    productCard.textContent = '';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'product-inner';
+
+    const imgEl = document.createElement(p.imageUrl ? 'img' : 'div');
+    imgEl.className = 'product-img' + (p.imageUrl ? '' : ' product-img--empty');
+    if (p.imageUrl) {
+      imgEl.src = p.imageUrl;
+      imgEl.alt = '';
+      imgEl.loading = 'lazy';
+    } else {
+      imgEl.textContent = 'Ảnh SP';
+    }
+
+    const info = document.createElement('div');
+    info.className = 'product-info';
+
+    const name = document.createElement('div');
+    name.className = 'product-name';
+    name.textContent = p.productName || 'Sản phẩm Shopee';
+
+    const price = document.createElement('div');
+    price.className = 'product-price';
+    price.textContent =
+      fmtPrice(p.priceMin) + (p.priceMax && p.priceMax !== p.priceMin ? ' – ' + fmtPrice(p.priceMax) : '');
+
+    const meta = document.createElement('div');
+    meta.className = 'product-meta';
+    const commission = p.commissionRate != null ? `Hoa hồng ~${Math.round(Number(p.commissionRate) * 100)}%` : '';
+    meta.textContent = [p.shopName, commission].filter(Boolean).join(' · ');
+
+    info.append(name, price, meta);
+    if (mode === 'demo') {
+      const b = document.createElement('span');
+      b.className = 'product-badge';
+      b.textContent = 'Demo — cần cắm API để lấy dữ liệu thật';
+      info.append(b);
+    }
+
+    wrap.append(imgEl, info);
+    productCard.appendChild(wrap);
   }
 })();

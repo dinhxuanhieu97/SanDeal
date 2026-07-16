@@ -2,6 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/api/convert", "destination": "/api/index" },
+    { "source": "/api/product", "destination": "/api/index" },
     { "source": "/api/health", "destination": "/api/index" },
     { "source": "/huong-dan-su-dung", "destination": "/huong-dan-su-dung.html" }
   ]
