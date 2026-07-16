@@ -29,6 +29,8 @@
   <meta name="twitter:title" content="Săn Deal – Dán link Shopee, tự động nhận voucher & hoàn tiền" />
   <meta name="twitter:description" content="Dán link Shopee, nhận voucher độc quyền và hoàn tiền tối đa. Miễn phí, nhanh trong 3 giây." />
   <meta name="twitter:image" content="https://sandeal.vn/og-image.png" />
+  <meta name="twitter:image:alt" content="Săn Deal - chuyển link Shopee nhận voucher và hoàn tiền" />
+  <meta name="author" content="Săn Deal" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/styles.css" />
@@ -44,6 +46,29 @@
     "operatingSystem": "Web",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "VND" },
     "description": "Chuyển link Shopee để tự động nhận voucher độc quyền và hoàn tiền."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://sandeal.vn/#org",
+        "name": "Săn Deal",
+        "url": "https://sandeal.vn/",
+        "logo": "https://sandeal.vn/og-image.png",
+        "description": "Công cụ chuyển link Shopee để nhận voucher và hoàn tiền, miễn phí cho người Việt."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://sandeal.vn/#website",
+        "url": "https://sandeal.vn/",
+        "name": "Săn Deal",
+        "inLanguage": "vi-VN",
+        "publisher": { "@id": "https://sandeal.vn/#org" }
+      }
+    ]
   }
   </script>
 </head>
@@ -191,6 +216,19 @@
         </details>
       </div>
     </section>
+    <!-- ===== Chia sẻ ===== -->
+    <section class="section share-section" aria-label="Chia sẻ Săn Deal">
+      <div class="container narrow share-box">
+        <h2 class="section-title">Thấy hay? Chia sẻ cho bạn bè cùng săn</h2>
+        <p class="section-sub">Giúp bạn bè mua Shopee rẻ hơn — chia sẻ Săn Deal ngay.</p>
+        <div class="share-buttons">
+          <a class="share-btn share-fb" data-share="facebook" target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook">Facebook</a>
+          <a class="share-btn share-x" data-share="x" target="_blank" rel="noopener" aria-label="Chia sẻ lên X">X (Twitter)</a>
+          <a class="share-btn share-zalo" data-share="zalo" target="_blank" rel="noopener" aria-label="Chia sẻ lên Zalo">Zalo</a>
+          <button type="button" class="share-btn share-copy" data-share="copy" aria-label="Sao chép liên kết">Sao chép link</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ===== Footer ===== -->
@@ -219,6 +257,7 @@
   </footer>
 
   <script src="/nav.js"></script>
+  <script src="/share.js"></script>
   <script src="/app.js"></script>
 </body>
 </html>
