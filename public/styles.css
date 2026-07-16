@@ -144,6 +144,22 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
 .product-meta { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .product-badge { display: inline-block; margin-top: .5rem; background: var(--bg-alt); color: var(--pink-text); font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 999px; }
 
+/* Danh sách mã voucher */
+.voucher-block { margin-top: 1rem; text-align: left; }
+.voucher-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin: 0 0 .5rem; }
+.voucher-group { margin-bottom: .8rem; }
+.voucher-group-head { font-size: .82rem; font-weight: 700; color: var(--pink-text); margin-bottom: .4rem; }
+.voucher-item { display: flex; justify-content: space-between; align-items: center; gap: .6rem; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .55rem .7rem; margin-bottom: .4rem; }
+.voucher-item--used { opacity: .6; }
+.voucher-left { min-width: 0; }
+.voucher-code { font-weight: 800; color: var(--ink); letter-spacing: .3px; }
+.voucher-desc { font-size: .82rem; color: var(--muted); margin-top: .1rem; }
+.voucher-right { display: flex; align-items: center; gap: .5rem; flex: 0 0 auto; }
+.voucher-status { font-size: .72rem; font-weight: 700; padding: .15rem .5rem; border-radius: 999px; }
+.voucher-status.is-ok { background: #e6f7ec; color: #1a7f45; }
+.voucher-status.is-used { background: #fde8e8; color: #c0392b; }
+.voucher-copy { padding: .35rem .8rem; font-size: .8rem; }
+
 /* Hero stats */
 .hero-stats {
   list-style: none; display: flex; justify-content: center; gap: 2.5rem;

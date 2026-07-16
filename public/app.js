@@ -13,6 +13,8 @@
   const dealNote = document.getElementById('deal-note');
   const variantsEl = document.getElementById('variants');
   const productCard = document.getElementById('product-card');
+  const voucherBlock = document.getElementById('voucher-block');
+  const voucherList = document.getElementById('voucher-list');
   let currentUrl = '';
 
   const MODE_LABEL = {
@@ -60,6 +62,7 @@
       result.hidden = false;
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       fetchProduct(url);
+      renderVouchers();
     } catch (err) {
       showError('Không kết nối được máy chủ. Kiểm tra server đang chạy chưa?');
     } finally {
@@ -209,5 +212,91 @@
 
     wrap.append(imgEl, info);
     productCard.appendChild(wrap);
+  }
+
+  // ===== Danh sách mã voucher (từ /vouchers.json — thay bằng mã của bạn) =====
+  let vouchersData = null;
+  async function renderVouchers() {
+    if (!voucherBlock || !voucherList) return;
+    try {
+      if (!vouchersData) {
+        const res = await fetch('/vouchers.json', { cache: 'no-store' });
+        vouchersData = await res.json();
+      }
+    } catch {
+      return;
+    }
+    const groups = (vouchersData && vouchersData.groups) || [];
+    if (!groups.length) return;
+
+    voucherList.textContent = '';
+    for (const g of groups) {
+      const codes = g.codes || [];
+      if (!codes.length) continue;
+
+      const grp = document.createElement('div');
+      grp.className = 'voucher-group';
+      const head = document.createElement('div');
+      head.className = 'voucher-group-head';
+      head.textContent = `Mã ${g.channel} (${codes.length} mã)`;
+      grp.appendChild(head);
+
+      for (const c of codes) {
+        const used = c.status === 'used';
+        const card = document.createElement('div');
+        card.className = 'voucher-item' + (used ? ' voucher-item--used' : '');
+
+        const left = document.createElement('div');
+        left.className = 'voucher-left';
+        const code = document.createElement('div');
+        code.className = 'voucher-code';
+        code.textContent = c.code || '';
+        const desc = document.createElement('div');
+        desc.className = 'voucher-desc';
+        desc.textContent = c.desc || '';
+        left.append(code, desc);
+
+        const right = document.createElement('div');
+        right.className = 'voucher-right';
+        const badge = document.createElement('span');
+        badge.className = 'voucher-status ' + (used ? 'is-used' : 'is-ok');
+        badge.textContent = used ? 'Hết lượt' : 'Áp được';
+        right.appendChild(badge);
+        if (!used) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'btn btn-copy voucher-copy';
+          btn.textContent = 'Copy mã';
+          btn.setAttribute('data-code', c.code || '');
+          right.appendChild(btn);
+        }
+
+        card.append(left, right);
+        grp.appendChild(card);
+      }
+      voucherList.appendChild(grp);
+    }
+    voucherBlock.hidden = false;
+  }
+
+  if (voucherList) {
+    voucherList.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.voucher-copy');
+      if (!btn) return;
+      const code = btn.getAttribute('data-code') || '';
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch {
+        const t = document.createElement('textarea');
+        t.value = code;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+      }
+      const old = btn.textContent;
+      btn.textContent = 'Đã chép ✓';
+      setTimeout(() => (btn.textContent = old), 1500);
+    });
   }
 })();

@@ -1,0 +1,24 @@
+{
+  "_huong_dan": "Thay danh sách dưới bằng MÃ CỦA BẠN. Mỗi nhóm là 1 kênh; status = 'available' (Áp được) hoặc 'used' (Hết lượt).",
+  "groups": [
+    {
+      "channel": "Facebook",
+      "codes": [
+        { "code": "FBSAMPLE01", "desc": "Giảm 20% tối đa 100k, đơn từ 50k", "status": "available" }
+      ]
+    },
+    {
+      "channel": "Youtube",
+      "codes": [
+        { "code": "YTSAMPLE01", "desc": "Giảm 15% tối đa 50k, đơn từ 0đ", "status": "available" },
+        { "code": "YTSAMPLE02", "desc": "Giảm 10% tối đa 30k", "status": "used" }
+      ]
+    },
+    {
+      "channel": "Instagram",
+      "codes": [
+        { "code": "IGSAMPLE01", "desc": "Freeship giảm 30k, đơn từ 0đ", "status": "available" }
+      ]
+    }
+  ]
+}
