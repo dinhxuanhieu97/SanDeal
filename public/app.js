@@ -10,6 +10,9 @@
   const openBtn = document.getElementById('open-btn');
   const copyBtn = document.getElementById('copy-btn');
   const errorEl = document.getElementById('error');
+  const dealNote = document.getElementById('deal-note');
+  const variantsEl = document.getElementById('variants');
+  let currentUrl = '';
 
   const MODE_LABEL = {
     official: 'Link chính thức',
@@ -51,6 +54,8 @@
       openBtn.href = data.convertedUrl;
       resultMode.textContent = MODE_LABEL[data.mode] || data.mode;
       resultNote.textContent = data.note || 'Mở link này để mua hàng và nhận ưu đãi.';
+      currentUrl = data.convertedUrl;
+      renderVariants();
       result.hidden = false;
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (err) {
@@ -72,4 +77,60 @@
       document.execCommand('copy');
     }
   });
+
+  // ===== Biến thể kết quả để chia sẻ =====
+  function buildVariants(url, note) {
+    const deal = note && note.trim() ? note.trim() : 'Ưu đãi độc quyền + hoàn tiền';
+    return [
+      { label: 'Link gọn', text: url },
+      { label: 'Link kèm ưu đãi', text: `🔥 ${deal}\n👉 ${url}` },
+      { label: 'Caption bán hàng', text: `🛒 Săn ngay kẻo lỡ!\n✅ ${deal}\n🔗 Mua tại: ${url}\n#SanDeal #Shopee #hoantien` },
+    ];
+  }
+
+  function renderVariants() {
+    if (!variantsEl || !currentUrl) return;
+    const items = buildVariants(currentUrl, dealNote ? dealNote.value : '');
+    variantsEl.innerHTML = items
+      .map(
+        (v, i) => `
+      <div class="variant">
+        <div class="variant-head">
+          <span class="variant-label">${v.label}</span>
+          <button type="button" class="btn btn-copy variant-copy" data-idx="${i}">Sao chép</button>
+        </div>
+        <pre class="variant-text" id="variant-text-${i}"></pre>
+      </div>`
+      )
+      .join('');
+    items.forEach((v, i) => {
+      const el = document.getElementById('variant-text-' + i);
+      if (el) el.textContent = v.text;
+    });
+  }
+
+  if (dealNote) dealNote.addEventListener('input', renderVariants);
+
+  if (variantsEl) {
+    variantsEl.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.variant-copy');
+      if (!btn) return;
+      const el = document.getElementById('variant-text-' + btn.getAttribute('data-idx'));
+      if (!el) return;
+      try {
+        await navigator.clipboard.writeText(el.textContent);
+      } catch {
+        const r = document.createRange();
+        r.selectNode(el);
+        const sel = getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+        document.execCommand('copy');
+        sel.removeAllRanges();
+      }
+      const old = btn.textContent;
+      btn.textContent = 'Đã chép ✓';
+      setTimeout(() => (btn.textContent = old), 1500);
+    });
+  }
 })();

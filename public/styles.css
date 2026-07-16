@@ -112,6 +112,26 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
 .result-note { color: var(--muted); font-size: .82rem; margin: .6rem 0 0; }
 .error { color: #d61f4b; font-weight: 600; margin-top: 1rem; }
 
+/* Ghi chú ưu đãi + biến thể chia sẻ */
+.deal-note-wrap { margin-top: .9rem; }
+.deal-note-label { display: block; font-size: .85rem; font-weight: 600; color: var(--ink); margin-bottom: .35rem; }
+.deal-note-input {
+  width: 100%; border: 1px solid var(--line); border-radius: 10px;
+  padding: .6rem .8rem; font-size: .95rem; background: #fff; outline: none;
+}
+.deal-note-input:focus { border-color: var(--pink); }
+.variants-title { font-size: .85rem; font-weight: 700; color: var(--ink); margin: 1rem 0 .5rem; }
+.variants { display: grid; gap: .7rem; }
+.variant { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-alt); padding: .7rem .8rem; }
+.variant-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem; gap: .5rem; }
+.variant-label { font-size: .82rem; font-weight: 700; color: var(--pink-text); }
+.variant-copy { padding: .35rem .9rem; font-size: .82rem; }
+.variant-text {
+  margin: 0; font-family: inherit; font-size: .9rem; color: var(--ink);
+  white-space: pre-wrap; word-break: break-word; background: #fff;
+  border: 1px solid var(--line); border-radius: 8px; padding: .55rem .7rem;
+}
+
 /* Hero stats */
 .hero-stats {
   list-style: none; display: flex; justify-content: center; gap: 2.5rem;
