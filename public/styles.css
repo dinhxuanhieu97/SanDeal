@@ -160,6 +160,22 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
 .voucher-status.is-used { background: #fde8e8; color: #c0392b; }
 .voucher-copy { padding: .35rem .8rem; font-size: .8rem; }
 
+/* Hàng nút nhanh theo kênh: Mã FB / Mã YTB / Mã IG */
+.voucher-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .2rem 0 .9rem; }
+.vbtn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .85rem; border: 0; border-radius: 999px; cursor: pointer;
+  font-size: .82rem; font-weight: 700; color: #fff; line-height: 1;
+  background: #555; transition: filter .15s ease, transform .05s ease;
+}
+.vbtn:hover { filter: brightness(1.06); }
+.vbtn:active { transform: translateY(1px); }
+.vbtn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.vbtn-ic { font-size: .9rem; opacity: .9; }
+.vbtn-fb { background: #1461c9; }
+.vbtn-yt { background: #c4302b; }
+.vbtn-ig { background: linear-gradient(45deg, #c13584 0%, #e1306c 45%, #f77737 100%); }
+
 /* Hero stats */
 .hero-stats {
   list-style: none; display: flex; justify-content: center; gap: 2.5rem;

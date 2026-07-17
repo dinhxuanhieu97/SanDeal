@@ -15,6 +15,14 @@
   const productCard = document.getElementById('product-card');
   const voucherBlock = document.getElementById('voucher-block');
   const voucherList = document.getElementById('voucher-list');
+  const voucherActions = document.getElementById('voucher-actions');
+
+  // Nhãn + màu nút nhanh theo kênh
+  const CHANNEL_BTN = {
+    Facebook: { label: 'Mã FB', cls: 'vbtn-fb' },
+    Youtube: { label: 'Mã YTB', cls: 'vbtn-yt' },
+    Instagram: { label: 'Mã IG', cls: 'vbtn-ig' },
+  };
   let currentUrl = '';
 
   const MODE_LABEL = {
@@ -236,6 +244,7 @@
 
       const grp = document.createElement('div');
       grp.className = 'voucher-group';
+      grp.dataset.channel = g.channel;
       const head = document.createElement('div');
       head.className = 'voucher-group-head';
       head.textContent = `Mã ${g.channel} (${codes.length} mã)`;
@@ -276,7 +285,59 @@
       }
       voucherList.appendChild(grp);
     }
+
+    // Hàng nút nhanh theo kênh (Mã FB / Mã YTB / Mã IG)
+    if (voucherActions) {
+      voucherActions.textContent = '';
+      for (const g of groups) {
+        if (!(g.codes && g.codes.length)) continue;
+        const conf = CHANNEL_BTN[g.channel] || { label: 'Mã ' + g.channel, cls: '' };
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'vbtn ' + conf.cls;
+        btn.setAttribute('data-channel', g.channel);
+        const t = document.createElement('span');
+        t.textContent = '→ ' + conf.label;
+        const ic = document.createElement('span');
+        ic.className = 'vbtn-ic';
+        ic.textContent = '⧉';
+        btn.append(t, ic);
+        voucherActions.appendChild(btn);
+      }
+    }
+
     voucherBlock.hidden = false;
+  }
+
+  // Bấm nút kênh: copy mã còn lượt đầu tiên của kênh + cuộn tới nhóm
+  if (voucherActions) {
+    voucherActions.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.vbtn');
+      if (!btn) return;
+      const channel = btn.getAttribute('data-channel');
+      const group = (vouchersData?.groups || []).find((g) => g.channel === channel);
+      const avail = group && (group.codes || []).find((c) => c.status !== 'used');
+      const grpEl = voucherList.querySelector(`.voucher-group[data-channel="${CSS.escape(channel)}"]`);
+      if (grpEl) grpEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const label = btn.querySelector('span').textContent;
+      if (!avail) {
+        btn.querySelector('span').textContent = 'Hết mã';
+        setTimeout(() => (btn.querySelector('span').textContent = label), 1500);
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(avail.code);
+      } catch {
+        const t = document.createElement('textarea');
+        t.value = avail.code;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+      }
+      btn.querySelector('span').textContent = 'Đã chép: ' + avail.code;
+      setTimeout(() => (btn.querySelector('span').textContent = label), 1600);
+    });
   }
 
   if (voucherList) {
