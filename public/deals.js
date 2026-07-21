@@ -55,7 +55,7 @@
           price: d.priceNew,
           priceCurrency: 'VND',
           availability: 'https://schema.org/InStock',
-          url: 'https://sandeal.top/san-sale',
+          url: 'https://san-deal.vercel.app/san-sale',
         },
       },
     }));
@@ -215,6 +215,7 @@
     search.type = 'search';
     search.className = 'deal-search';
     search.placeholder = '🔎 Tìm sản phẩm...';
+    search.value = state.q || '';
     search.setAttribute('aria-label', 'Tìm sản phẩm');
     const sort = document.createElement('select');
     sort.className = 'deal-sort';
@@ -315,7 +316,8 @@
       return;
     }
     injectSchema(deals);
-    const state = { cat: 'Tất cả', q: '', sort: 'default', page: 1, pageSize: 24 };
+    const params = new URLSearchParams(location.search);
+    const state = { cat: 'Tất cả', q: params.get('q') || '', sort: 'default', page: 1, pageSize: 24 };
     const cats = ['Tất cả', ...Array.from(new Set(deals.map((d) => d.category).filter(Boolean)))];
     buildControls(cats, deals, subId, state);
     renderFiltered(deals, subId, state);

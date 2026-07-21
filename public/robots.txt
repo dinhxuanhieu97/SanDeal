@@ -4,4 +4,4 @@ Allow: /
 # Không cho index các endpoint API
 Disallow: /api/
 
-Sitemap: https://sandeal.top/sitemap.xml
+Sitemap: https://san-deal.vercel.app/sitemap.xml
