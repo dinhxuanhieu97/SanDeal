@@ -55,7 +55,7 @@
           price: d.priceNew,
           priceCurrency: 'VND',
           availability: 'https://schema.org/InStock',
-          url: 'https://sandeal.top/san-sale',
+          url: 'https://san-deal.vercel.app/san-sale',
         },
       },
     }));
