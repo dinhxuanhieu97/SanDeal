@@ -5,6 +5,7 @@ import {
   parseShopeeIds,
   queryProductOffer,
 } from '../lib/shopee.js';
+import { getDealsCached } from '../lib/deals.js';
 
 const SUB_ID = process.env.SHOPEE_SUB_ID || 'sandeal';
 const APP_ID = process.env.SHOPEE_APP_ID || '';
@@ -31,6 +32,17 @@ export default async function handler(req, res) {
 
   if (url.startsWith('/api/health')) {
     return res.status(200).json({ ok: true, mode: APP_ID && APP_SECRET ? 'official' : 'demo', subId: SUB_ID });
+  }
+
+  // ===== /api/deals: danh sách deal cho trang /san-sale (GET, có cache) =====
+  if (url.startsWith('/api/deals')) {
+    res.setHeader('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=3600');
+    try {
+      const payload = await getDealsCached({ appId: APP_ID, appSecret: APP_SECRET, subId: SUB_ID });
+      return res.status(200).json(payload);
+    } catch (err) {
+      return res.status(200).json({ ok: false, error: 'Không tải được deal, thử lại sau.' });
+    }
   }
 
   if (req.method !== 'POST') {

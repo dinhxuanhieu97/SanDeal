@@ -4,6 +4,7 @@
     { "source": "/api/convert", "destination": "/api/index" },
     { "source": "/api/product", "destination": "/api/index" },
     { "source": "/api/health", "destination": "/api/index" },
+    { "source": "/api/deals", "destination": "/api/index" },
     { "source": "/huong-dan-su-dung", "destination": "/huong-dan-su-dung.html" },
     { "source": "/san-sale", "destination": "/deals.html" }
   ]

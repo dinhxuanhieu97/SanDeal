@@ -10,6 +10,7 @@ import {
   parseShopeeIds,
   queryProductOffer,
 } from './lib/shopee.js';
+import { getDealsCached } from './lib/deals.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -148,6 +149,23 @@ export function createApp(config = {}) {
         product: demoProduct(url, ids),
         note: 'API sản phẩm tạm thời lỗi, hiển thị tạm.',
       });
+    }
+  });
+
+  // Danh sách deal cho trang /san-sale (tự động lấy từ Shopee API, có cache)
+  const DEALS_TTL_MS = config.dealsTtlMs ?? 30 * 60 * 1000;
+  app.get('/api/deals', async (req, res) => {
+    // Cho CDN/Vercel cache ở biên: 30 phút, phục vụ bản cũ khi đang làm mới
+    res.set('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=3600');
+    try {
+      const payload = await getDealsCached(
+        { appId: APP_ID, appSecret: APP_SECRET, subId: SUB_ID, timeoutMs: UPSTREAM_TIMEOUT_MS },
+        DEALS_TTL_MS
+      );
+      return res.json(payload);
+    } catch (err) {
+      console.error('[deals] lỗi:', err.message);
+      return res.status(200).json({ ok: false, error: 'Không tải được deal, thử lại sau.' });
     }
   });
 

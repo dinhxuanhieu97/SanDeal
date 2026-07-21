@@ -1,5 +1,6 @@
-// Trang deal chuẩn SEO: render deal từ deals.json + chèn JSON-LD ItemList.
-// Link ra Shopee được gắn sub_id (lấy từ /api/health) để ghi nhận hoa hồng.
+// Trang deal chuẩn SEO: render deal từ /api/deals (Shopee API, tự động, có cache)
+// + chèn JSON-LD ItemList. Link ra Shopee đã gắn tracking sẵn từ server.
+// Fallback: nếu /api/deals lỗi thì đọc file tĩnh /deals.json và tự gắn sub_id.
 (function () {
   const grid = document.getElementById('deal-grid');
   const updatedEl = document.getElementById('deals-updated');
@@ -119,7 +120,8 @@
 
       const cta = document.createElement('a');
       cta.className = 'deal-cta';
-      cta.href = withSubId(d.url, subId);
+      // subId != null => link tĩnh cần gắn tracking; ngược lại link từ API đã gắn sẵn
+      cta.href = subId ? withSubId(d.url, subId) : d.url;
       cta.target = '_blank';
       cta.rel = 'nofollow sponsored noopener';
       cta.textContent = 'Săn ngay trên Shopee →';
@@ -132,14 +134,30 @@
   }
 
   (async function init() {
-    let data;
+    let data = null;
+    let subId = null; // null => link đã gắn tracking sẵn (từ API)
+
+    // 1) Ưu tiên endpoint động /api/deals (tự cập nhật từ Shopee)
     try {
-      const r = await fetch('/deals.json', { cache: 'no-cache' });
-      data = await r.json();
+      const r = await fetch('/api/deals', { cache: 'no-cache' });
+      const j = await r.json();
+      if (j && j.ok && Array.isArray(j.deals) && j.deals.length) data = j;
     } catch {
-      grid.innerHTML = '<p class="deals-empty">Chưa tải được danh sách deal. Vui lòng thử lại.</p>';
-      return;
+      /* rơi xuống fallback tĩnh */
     }
+
+    // 2) Fallback: file tĩnh /deals.json (link gốc, cần gắn sub_id)
+    if (!data) {
+      try {
+        const r = await fetch('/deals.json', { cache: 'no-cache' });
+        data = await r.json();
+        subId = await getSubId();
+      } catch {
+        grid.innerHTML = '<p class="deals-empty">Chưa tải được danh sách deal. Vui lòng thử lại.</p>';
+        return;
+      }
+    }
+
     const deals = (data && data.deals) || [];
     if (updatedEl && data.updated) updatedEl.textContent = 'Cập nhật: ' + data.updated;
     if (!deals.length) {
@@ -147,7 +165,6 @@
       return;
     }
     injectSchema(deals);
-    const subId = await getSubId();
     renderCards(deals, subId);
   })();
 })();

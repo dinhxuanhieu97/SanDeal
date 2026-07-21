@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test test/unit.test.mjs test/api.test.mjs test/ratelimit.test.mjs test/seo.test.mjs test/product.test.mjs test/chaos.test.mjs",
+    "test": "node --test test/unit.test.mjs test/api.test.mjs test/ratelimit.test.mjs test/seo.test.mjs test/product.test.mjs test/deals.test.mjs test/chaos.test.mjs",
     "test:unit": "node --test test/unit.test.mjs",
     "test:api": "node --test test/api.test.mjs",
     "test:e2e": "node --test test/e2e.spec.mjs test/a11y.axe.mjs test/responsive.spec.mjs",
