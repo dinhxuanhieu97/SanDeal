@@ -412,3 +412,7 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
 .deal-search:focus{outline:none;border-color:var(--pink)}
 .deal-sort{border:1px solid var(--line);border-radius:10px;padding:.55rem .6rem;font-size:.85rem;background:#fff;font-family:inherit;cursor:pointer}
 .deal-count{display:inline-block;margin-top:.55rem;color:var(--muted);font-size:.82rem}
+
+/* Phân trang trang deal */
+.deal-more{text-align:center;margin:.2rem 0 1.6rem}
+.deal-more-btn{min-width:200px}

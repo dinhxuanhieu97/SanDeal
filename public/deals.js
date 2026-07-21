@@ -157,13 +157,26 @@
     if (state.sort === 'disc') list = [...list].sort((a, b) => parseDisc(b) - parseDisc(a));
     else if (state.sort === 'price-asc') list = [...list].sort((a, b) => (a.priceNew || 0) - (b.priceNew || 0));
     else if (state.sort === 'price-desc') list = [...list].sort((a, b) => (b.priceNew || 0) - (a.priceNew || 0));
+    const size = state.pageSize || 24;
+    const total = list.length;
+    const shown = list.slice(0, (state.page || 1) * size);
     const cnt = document.getElementById('deal-count');
-    if (cnt) cnt.textContent = list.length + ' sản phẩm';
-    if (!list.length) {
+    if (cnt) cnt.textContent = total ? shown.length + ' / ' + total + ' sản phẩm' : '0 sản phẩm';
+    const more = document.getElementById('load-more');
+    if (!total) {
       grid.innerHTML = '<p class="deals-empty">Không tìm thấy sản phẩm phù hợp. Thử từ khoá khác nhé!</p>';
+      if (more) more.style.display = 'none';
       return;
     }
-    renderCards(list, subId);
+    renderCards(shown, subId);
+    if (more) {
+      if (shown.length < total) {
+        more.style.display = '';
+        more.textContent = 'Xem thêm (' + (total - shown.length) + ')';
+      } else {
+        more.style.display = 'none';
+      }
+    }
   }
 
   // Dựng thanh điều khiển: chip danh mục + ô tìm + sắp xếp
@@ -180,6 +193,7 @@
       b.textContent = c;
       b.addEventListener('click', () => {
         state.cat = c;
+        state.page = 1;
         chips.querySelectorAll('.cat-chip').forEach((x) => x.classList.toggle('active', x === b));
         renderFiltered(all, subId, state);
       });
@@ -216,16 +230,33 @@
     wrap.append(chips, row, count);
     grid.parentNode.insertBefore(wrap, grid);
 
+    // Nút "Xem thêm" (phân trang) đặt ngay sau lưới
+    const moreWrap = document.createElement('div');
+    moreWrap.className = 'deal-more';
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'btn btn-ghost deal-more-btn';
+    more.id = 'load-more';
+    more.style.display = 'none';
+    more.addEventListener('click', () => {
+      state.page = (state.page || 1) + 1;
+      renderFiltered(all, subId, state);
+    });
+    moreWrap.appendChild(more);
+    grid.parentNode.insertBefore(moreWrap, grid.nextSibling);
+
     let t;
     search.addEventListener('input', () => {
       clearTimeout(t);
       t = setTimeout(() => {
         state.q = search.value;
+        state.page = 1;
         renderFiltered(all, subId, state);
       }, 180);
     });
     sort.addEventListener('change', () => {
       state.sort = sort.value;
+      state.page = 1;
       renderFiltered(all, subId, state);
     });
   }
@@ -275,7 +306,7 @@
       return;
     }
     injectSchema(deals);
-    const state = { cat: 'Tất cả', q: '', sort: 'default' };
+    const state = { cat: 'Tất cả', q: '', sort: 'default', page: 1, pageSize: 24 };
     const cats = ['Tất cả', ...Array.from(new Set(deals.map((d) => d.category).filter(Boolean)))];
     buildControls(cats, deals, subId, state);
     renderFiltered(deals, subId, state);
