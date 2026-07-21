@@ -1,72 +1,13 @@
 {
-  "updated": "2026-07-20",
-  "note": "Dữ liệu mẫu — thay bằng deal thật của bạn. 'url' là link sản phẩm Shopee gốc; hệ thống tự gắn sub_id khi người dùng bấm.",
+  "updated": "2026-07-21",
+  "mode": "demo",
+  "note": "Deal mẫu — link trỏ tới trang tìm kiếm Shopee thật theo từ khoá. Thay bằng deal thật của bạn khi có.",
   "deals": [
-    {
-      "id": "d1",
-      "name": "Nồi chiên không dầu 5L điện tử màn hình cảm ứng",
-      "category": "Gia dụng nhà bếp",
-      "image": "",
-      "priceNew": 899000,
-      "priceOld": 1590000,
-      "discountText": "-43%",
-      "note": "Freeship + hoàn tiền 8%",
-      "url": "https://shopee.vn/product/100000/200000"
-    },
-    {
-      "id": "d2",
-      "name": "Serum dưỡng trắng da Vitamin C 30ml chính hãng",
-      "category": "Làm đẹp",
-      "image": "",
-      "priceNew": 149000,
-      "priceOld": 320000,
-      "discountText": "-53%",
-      "note": "Mã giảm thêm 20k, hoàn tiền 12%",
-      "url": "https://shopee.vn/product/100001/200001"
-    },
-    {
-      "id": "d3",
-      "name": "Bộ 4 hộp bảo quản thực phẩm nắp khoá kín",
-      "category": "Gia dụng nhà bếp",
-      "image": "",
-      "priceNew": 79000,
-      "priceOld": 180000,
-      "discountText": "-56%",
-      "note": "Freeship đơn từ 50k",
-      "url": "https://shopee.vn/product/100002/200002"
-    },
-    {
-      "id": "d4",
-      "name": "Xe đẩy gấp gọn cho bé thiết kế 2 chiều",
-      "category": "Mẹ & bé",
-      "image": "",
-      "priceNew": 1290000,
-      "priceOld": 2100000,
-      "discountText": "-39%",
-      "note": "Trả góp 0%, hoàn tiền 6%",
-      "url": "https://shopee.vn/product/100003/200003"
-    },
-    {
-      "id": "d5",
-      "name": "Đèn LED để bàn chống cận cảm ứng 3 chế độ sáng",
-      "category": "Gia dụng",
-      "image": "",
-      "priceNew": 199000,
-      "priceOld": 450000,
-      "discountText": "-56%",
-      "note": "Mã giảm 30k, freeship",
-      "url": "https://shopee.vn/product/100004/200004"
-    },
-    {
-      "id": "d6",
-      "name": "Sữa rửa mặt tạo bọt dịu nhẹ cho da nhạy cảm 150ml",
-      "category": "Làm đẹp",
-      "image": "",
-      "priceNew": 89000,
-      "priceOld": 165000,
-      "discountText": "-46%",
-      "note": "Mua 1 tặng 1, hoàn tiền 10%",
-      "url": "https://shopee.vn/product/100005/200005"
-    }
+    { "name": "Nồi chiên không dầu 5L điện tử màn hình cảm ứng", "category": "Gia dụng nhà bếp", "image": "", "priceNew": 899000, "priceOld": 1590000, "discountText": "-43%", "note": "Freeship + hoàn tiền 8%", "url": "https://shopee.vn/search?keyword=n%E1%BB%93i%20chi%C3%AAn%20kh%C3%B4ng%20d%E1%BA%A7u%205L" },
+    { "name": "Serum dưỡng trắng da Vitamin C 30ml chính hãng", "category": "Làm đẹp", "image": "", "priceNew": 149000, "priceOld": 320000, "discountText": "-53%", "note": "Mã giảm thêm 20k, hoàn tiền 12%", "url": "https://shopee.vn/search?keyword=serum%20vitamin%20c" },
+    { "name": "Bộ 4 hộp bảo quản thực phẩm nắp khoá kín", "category": "Gia dụng nhà bếp", "image": "", "priceNew": 79000, "priceOld": 180000, "discountText": "-56%", "note": "Freeship đơn từ 50k", "url": "https://shopee.vn/search?keyword=h%E1%BB%99p%20b%E1%BA%A3o%20qu%E1%BA%A3n%20th%E1%BB%B1c%20ph%E1%BA%A9m" },
+    { "name": "Xe đẩy gấp gọn cho bé thiết kế 2 chiều", "category": "Mẹ & bé", "image": "", "priceNew": 1290000, "priceOld": 2100000, "discountText": "-39%", "note": "Trả góp 0%, hoàn tiền 6%", "url": "https://shopee.vn/search?keyword=xe%20%C4%91%E1%BA%A9y%20em%20b%C3%A9%20g%E1%BA%A5p%20g%E1%BB%8Dn" },
+    { "name": "Đèn LED để bàn chống cận cảm ứng 3 chế độ sáng", "category": "Gia dụng", "image": "", "priceNew": 199000, "priceOld": 450000, "discountText": "-56%", "note": "Mã giảm 30k, freeship", "url": "https://shopee.vn/search?keyword=%C4%91%C3%A8n%20led%20%C4%91%E1%BB%83%20b%C3%A0n%20ch%E1%BB%91ng%20c%E1%BA%adn" },
+    { "name": "Sữa rửa mặt tạo bọt dịu nhẹ cho da nhạy cảm 150ml", "category": "Làm đẹp", "image": "", "priceNew": 89000, "priceOld": 165000, "discountText": "-46%", "note": "Mua 1 tặng 1, hoàn tiền 10%", "url": "https://shopee.vn/search?keyword=s%E1%BB%AFa%20r%E1%BB%ADa%20m%E1%BA%B7t%20d%E1%BB%8Bu%20nh%E1%BA%B9" }
   ]
 }

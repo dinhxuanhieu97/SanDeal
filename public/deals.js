@@ -160,6 +160,12 @@
 
     const deals = (data && data.deals) || [];
     if (updatedEl && data.updated) updatedEl.textContent = 'Cập nhật: ' + data.updated;
+    if (updatedEl && (data.mode === 'demo' || data.mode === 'demo-fallback')) {
+      updatedEl.insertAdjacentHTML(
+        'afterend',
+        '<p class="deals-demo-note">⚠️ Đây là deal mẫu minh hoạ. Bấm "Săn ngay" sẽ mở trang tìm kiếm Shopee cho sản phẩm tương tự (đã gắn tracking). Deal thật sẽ hiển thị khi cắm Shopee API hoặc cập nhật danh sách.</p>'
+      );
+    }
     if (!deals.length) {
       grid.innerHTML = '<p class="deals-empty">Chưa có deal nào. Quay lại sau nhé!</p>';
       return;
