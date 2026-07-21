@@ -17,7 +17,7 @@ test('robots.txt phục vụ đúng, trỏ sitemap & chặn /api', async () => {
   const res = await fetch(`${baseURL}/robots.txt`);
   const body = await res.text();
   assert.equal(res.status, 200);
-  assert.match(body, /Sitemap:\s*https:\/\/sandeal\.vn\/sitemap\.xml/);
+  assert.match(body, /Sitemap:\s*https:\/\/sandeal\.top\/sitemap\.xml/);
   assert.match(body, /Disallow:\s*\/api\//);
 });
 
@@ -26,8 +26,8 @@ test('sitemap.xml phục vụ đúng, có cả 2 trang', async () => {
   const body = await res.text();
   assert.equal(res.status, 200);
   assert.match(res.headers.get('content-type') || '', /xml/);
-  assert.match(body, /<loc>https:\/\/sandeal\.vn\/<\/loc>/);
-  assert.match(body, /<loc>https:\/\/sandeal\.vn\/huong-dan-su-dung<\/loc>/);
+  assert.match(body, /<loc>https:\/\/sandeal\.top\/<\/loc>/);
+  assert.match(body, /<loc>https:\/\/sandeal\.top\/huong-dan-su-dung<\/loc>/);
 });
 
 test('og-image.png tồn tại và là ảnh', async () => {
@@ -39,5 +39,5 @@ test('og-image.png tồn tại và là ảnh', async () => {
 test('meta OG trong trang chủ trỏ đúng ảnh og-image.png', async () => {
   const res = await fetch(`${baseURL}/`);
   const html = await res.text();
-  assert.match(html, /og:image"\s+content="https:\/\/sandeal\.vn\/og-image\.png"/);
+  assert.match(html, /og:image"\s+content="https:\/\/sandeal\.top\/og-image\.png"/);
 });
