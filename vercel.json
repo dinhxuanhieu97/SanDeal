@@ -6,6 +6,9 @@
     { "source": "/api/health", "destination": "/api/index" },
     { "source": "/api/deals", "destination": "/api/index" },
     { "source": "/huong-dan-su-dung", "destination": "/huong-dan-su-dung.html" },
-    { "source": "/san-sale", "destination": "/deals.html" }
+    { "source": "/san-sale", "destination": "/deals.html" },
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/blog/top-noi-chien-khong-dau", "destination": "/blog/top-noi-chien-khong-dau.html" },
+    { "source": "/blog/ma-giam-gia-shopee-hom-nay", "destination": "/blog/ma-giam-gia-shopee-hom-nay.html" }
   ]
 }

@@ -44,6 +44,17 @@ export function createApp(config = {}) {
     res.sendFile(path.join(__dirname, 'public', 'deals.html'));
   });
 
+  // Blog
+  app.get('/blog', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog.html'));
+  });
+  app.get('/blog/top-noi-chien-khong-dau', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'top-noi-chien-khong-dau.html'));
+  });
+  app.get('/blog/ma-giam-gia-shopee-hom-nay', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'ma-giam-gia-shopee-hom-nay.html'));
+  });
+
   // Chống spam: giới hạn số lần gọi API chuyển link theo IP
   const rlConfig = config.rateLimit ?? {};
   const limiter = rateLimit({
