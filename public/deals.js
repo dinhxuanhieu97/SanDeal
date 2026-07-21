@@ -139,6 +139,97 @@
     }
   }
 
+  // Bỏ dấu để tìm kiếm không phân biệt dấu
+  const norm = (s) =>
+    (s || '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+  const parseDisc = (d) => {
+    const m = /(-?\d+)/.exec(d.discountText || '');
+    return m ? Math.abs(+m[1]) : 0;
+  };
+
+  // Lọc + sắp xếp + render lại lưới theo trạng thái hiện tại
+  function renderFiltered(all, subId, state) {
+    let list = all.filter((d) => state.cat === 'Tất cả' || d.category === state.cat);
+    if (state.q) {
+      const q = norm(state.q);
+      list = list.filter((d) => norm(d.name).includes(q));
+    }
+    if (state.sort === 'disc') list = [...list].sort((a, b) => parseDisc(b) - parseDisc(a));
+    else if (state.sort === 'price-asc') list = [...list].sort((a, b) => (a.priceNew || 0) - (b.priceNew || 0));
+    else if (state.sort === 'price-desc') list = [...list].sort((a, b) => (b.priceNew || 0) - (a.priceNew || 0));
+    const cnt = document.getElementById('deal-count');
+    if (cnt) cnt.textContent = list.length + ' sản phẩm';
+    if (!list.length) {
+      grid.innerHTML = '<p class="deals-empty">Không tìm thấy sản phẩm phù hợp. Thử từ khoá khác nhé!</p>';
+      return;
+    }
+    renderCards(list, subId);
+  }
+
+  // Dựng thanh điều khiển: chip danh mục + ô tìm + sắp xếp
+  function buildControls(cats, all, subId, state) {
+    const wrap = document.createElement('div');
+    wrap.className = 'deal-controls';
+
+    const chips = document.createElement('div');
+    chips.className = 'cat-chips';
+    cats.forEach((c) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cat-chip' + (c === state.cat ? ' active' : '');
+      b.textContent = c;
+      b.addEventListener('click', () => {
+        state.cat = c;
+        chips.querySelectorAll('.cat-chip').forEach((x) => x.classList.toggle('active', x === b));
+        renderFiltered(all, subId, state);
+      });
+      chips.appendChild(b);
+    });
+
+    const row = document.createElement('div');
+    row.className = 'deal-controls-row';
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.className = 'deal-search';
+    search.placeholder = '🔎 Tìm sản phẩm...';
+    search.setAttribute('aria-label', 'Tìm sản phẩm');
+    const sort = document.createElement('select');
+    sort.className = 'deal-sort';
+    sort.setAttribute('aria-label', 'Sắp xếp');
+    [
+      ['default', 'Mặc định'],
+      ['disc', 'Giảm nhiều nhất'],
+      ['price-asc', 'Giá thấp → cao'],
+      ['price-desc', 'Giá cao → thấp'],
+    ].forEach(([v, t]) => {
+      const o = document.createElement('option');
+      o.value = v;
+      o.textContent = t;
+      sort.appendChild(o);
+    });
+    row.append(search, sort);
+
+    const count = document.createElement('span');
+    count.className = 'deal-count';
+    count.id = 'deal-count';
+
+    wrap.append(chips, row, count);
+    grid.parentNode.insertBefore(wrap, grid);
+
+    let t;
+    search.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        state.q = search.value;
+        renderFiltered(all, subId, state);
+      }, 180);
+    });
+    sort.addEventListener('change', () => {
+      state.sort = sort.value;
+      renderFiltered(all, subId, state);
+    });
+  }
+
   (async function init() {
     let data = null;
     let subId = null; // null => link đã gắn tracking sẵn (từ API)
@@ -184,6 +275,9 @@
       return;
     }
     injectSchema(deals);
-    renderCards(deals, subId);
+    const state = { cat: 'Tất cả', q: '', sort: 'default' };
+    const cats = ['Tất cả', ...Array.from(new Set(deals.map((d) => d.category).filter(Boolean)))];
+    buildControls(cats, deals, subId, state);
+    renderFiltered(deals, subId, state);
   })();
 })();

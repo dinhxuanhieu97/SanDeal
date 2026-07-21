@@ -399,3 +399,16 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
 
 /* Ghi chú deal mẫu (demo) trên trang /san-sale */
 .deals-demo-note{max-width:640px;margin:.6rem auto 0;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.82rem;line-height:1.5;padding:.6rem .8rem;border-radius:10px}
+
+/* Bộ lọc / tìm kiếm trang deal */
+.deal-controls{margin:1rem 0 1.2rem}
+.cat-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:.7rem}
+.cat-chip{padding:.42rem .9rem;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;font-size:.82rem;font-weight:600;cursor:pointer;transition:border-color .12s ease}
+.cat-chip:hover{border-color:var(--pink)}
+.cat-chip.active{background:var(--grad);color:#fff;border-color:transparent}
+.cat-chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.deal-controls-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.deal-search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;font-size:.9rem;background:#fff;font-family:inherit}
+.deal-search:focus{outline:none;border-color:var(--pink)}
+.deal-sort{border:1px solid var(--line);border-radius:10px;padding:.55rem .6rem;font-size:.85rem;background:#fff;font-family:inherit;cursor:pointer}
+.deal-count{display:inline-block;margin-top:.55rem;color:var(--muted);font-size:.82rem}
