@@ -72,12 +72,18 @@
       img.className = 'deal-thumb';
       img.loading = 'lazy';
       img.alt = d.name;
-      img.src =
-        d.image ||
+      img.referrerPolicy = 'no-referrer';
+      const placeholder =
         'data:image/svg+xml,' +
-          encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220"><rect width="100%" height="100%" fill="#fff5f2"/><text x="50%" y="50%" font-family="sans-serif" font-size="16" fill="#c2185b" text-anchor="middle" dy=".3em">Săn Deal</text></svg>'
-          );
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220"><rect width="100%" height="100%" fill="#fff5f2"/><text x="50%" y="50%" font-family="sans-serif" font-size="16" fill="#c2185b" text-anchor="middle" dy=".3em">Săn Deal</text></svg>'
+        );
+      img.src = d.image || placeholder;
+      // Ảnh Shopee lỗi/không tải được → hiện ảnh thay thế thay vì ô trống
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = placeholder;
+      };
 
       const body = document.createElement('div');
       body.className = 'deal-body';
@@ -164,6 +170,13 @@
       updatedEl.insertAdjacentHTML(
         'afterend',
         '<p class="deals-demo-note">⚠️ Đây là deal mẫu minh hoạ. Bấm "Săn ngay" sẽ mở trang tìm kiếm Shopee cho sản phẩm tương tự (đã gắn tracking). Deal thật sẽ hiển thị khi cắm Shopee API hoặc cập nhật danh sách.</p>'
+      );
+    } else if (updatedEl && data.mode === 'manual') {
+      updatedEl.insertAdjacentHTML(
+        'afterend',
+        '<p class="deals-demo-note">💡 Giá là mức tham khảo tại thời điểm cập nhật' +
+          (data.updated ? ' (' + data.updated + ')' : '') +
+          '. Bấm "Săn ngay" để xem giá &amp; ưu đãi mới nhất trên Shopee.</p>'
       );
     }
     if (!deals.length) {

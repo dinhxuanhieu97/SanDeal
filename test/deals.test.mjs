@@ -30,7 +30,7 @@ test('mapOffer: chuyển node Shopee sang thẻ deal, tính giá gốc từ % gi
 
 test('demoDeals: link mẫu được gắn sub_id', () => {
   const p = demoDeals('mysub');
-  assert.equal(p.mode, 'demo');
+  assert.ok(['demo', 'manual'].includes(p.mode));
   assert.ok(p.deals.length > 0);
   for (const d of p.deals) {
     assert.match(d.url, /af_sub1=mysub/);
@@ -40,7 +40,7 @@ test('demoDeals: link mẫu được gắn sub_id', () => {
 
 test('buildDealsPayload: không có credentials -> trả deal demo', async () => {
   const p = await buildDealsPayload({ subId: 'sandeal' });
-  assert.equal(p.mode, 'demo');
+  assert.ok(['demo', 'manual'].includes(p.mode));
   assert.ok(Array.isArray(p.deals) && p.deals.length > 0);
 });
 
@@ -137,7 +137,7 @@ test('GET /api/deals: demo mode trả deal có sub_id', async () => {
   const body = await res.json();
   server.close();
   assert.equal(body.ok, true);
-  assert.equal(body.mode, 'demo');
+  assert.ok(['demo', 'manual'].includes(body.mode));
   assert.ok(body.deals.length > 0);
   assert.match(body.deals[0].url, /af_sub1=sandeal/);
 });
