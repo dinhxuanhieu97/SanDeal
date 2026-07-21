@@ -9,6 +9,10 @@
     { "source": "/san-sale", "destination": "/deals.html" },
     { "source": "/blog", "destination": "/blog.html" },
     { "source": "/blog/top-noi-chien-khong-dau", "destination": "/blog/top-noi-chien-khong-dau.html" },
-    { "source": "/blog/ma-giam-gia-shopee-hom-nay", "destination": "/blog/ma-giam-gia-shopee-hom-nay.html" }
+    { "source": "/blog/ma-giam-gia-shopee-hom-nay", "destination": "/blog/ma-giam-gia-shopee-hom-nay.html" },
+    { "source": "/blog/review-serum-vitamin-c", "destination": "/blog/review-serum-vitamin-c.html" },
+    { "source": "/blog/do-so-sinh-can-mua", "destination": "/blog/do-so-sinh-can-mua.html" },
+    { "source": "/blog/may-xay-cam-tay-loai-nao-tot", "destination": "/blog/may-xay-cam-tay-loai-nao-tot.html" },
+    { "source": "/blog/kem-chong-nang-cho-da-dau", "destination": "/blog/kem-chong-nang-cho-da-dau.html" }
   ]
 }

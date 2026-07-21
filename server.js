@@ -54,6 +54,18 @@ export function createApp(config = {}) {
   app.get('/blog/ma-giam-gia-shopee-hom-nay', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'blog', 'ma-giam-gia-shopee-hom-nay.html'));
   });
+  app.get('/blog/review-serum-vitamin-c', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'review-serum-vitamin-c.html'));
+  });
+  app.get('/blog/do-so-sinh-can-mua', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'do-so-sinh-can-mua.html'));
+  });
+  app.get('/blog/may-xay-cam-tay-loai-nao-tot', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'may-xay-cam-tay-loai-nao-tot.html'));
+  });
+  app.get('/blog/kem-chong-nang-cho-da-dau', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'kem-chong-nang-cho-da-dau.html'));
+  });
 
   // Chống spam: giới hạn số lần gọi API chuyển link theo IP
   const rlConfig = config.rateLimit ?? {};
