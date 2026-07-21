@@ -9,6 +9,15 @@
   const fmtVnd = (n) =>
     typeof n === 'number' ? n.toLocaleString('vi-VN') + 'đ' : '';
 
+  // Rút gọn số lượng đã bán cho dễ đọc: 10000 -> "10k", 1500000 -> "1,5tr"
+  const fmtSold = (note) =>
+    (note || '').replace(/\d{4,}/, (m) => {
+      const n = +m;
+      if (n >= 1000000) return (n / 1000000).toFixed(n % 1000000 ? 1 : 0).replace('.', ',') + 'tr';
+      if (n >= 1000) return (n / 1000).toFixed(n % 1000 ? 1 : 0).replace('.', ',') + 'k';
+      return m;
+    });
+
   // Gắn tham số theo dõi affiliate vào link Shopee gốc (giống demo-mode server).
   function withSubId(rawUrl, subId) {
     try {
@@ -120,7 +129,7 @@
       if (d.note) {
         const note = document.createElement('p');
         note.className = 'deal-note';
-        note.textContent = d.note;
+        note.textContent = fmtSold(d.note);
         body.appendChild(note);
       }
 
