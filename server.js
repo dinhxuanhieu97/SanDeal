@@ -38,6 +38,11 @@ export function createApp(config = {}) {
     res.sendFile(path.join(__dirname, 'public', 'huong-dan-su-dung.html'));
   });
 
+  // Route thân thiện SEO cho trang deal
+  app.get('/san-sale', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'deals.html'));
+  });
+
   // Chống spam: giới hạn số lần gọi API chuyển link theo IP
   const rlConfig = config.rateLimit ?? {};
   const limiter = rateLimit({

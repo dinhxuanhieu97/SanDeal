@@ -303,3 +303,66 @@ h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .4em; }
   .guide-step { flex-direction: column; gap: .6rem; }
   .container, .container.narrow { width: 90%; }
 }
+
+/* ===== Khối gom cộng đồng Zalo / Telegram (phễu giữ chân) ===== */
+.community {
+  margin: 1.2rem 0 0;
+  background: linear-gradient(120deg, #fff5f2, #ffe9f0);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  text-align: center;
+}
+.community h3 { margin: 0 0 .3rem; font-size: 1.05rem; color: var(--ink); }
+.community p { margin: 0 0 .8rem; font-size: .9rem; color: var(--muted); }
+.community-btns { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+.community-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .65rem 1.15rem; border-radius: 999px; font-weight: 700; font-size: .9rem;
+  color: #fff; text-decoration: none; line-height: 1; transition: filter .15s ease, transform .05s ease;
+}
+.community-btn:hover { filter: brightness(1.07); }
+.community-btn:active { transform: translateY(1px); }
+.community-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.community-zalo { background: #0068ff; }
+.community-tele { background: #1877b3; }
+.community-ic { font-size: 1.05rem; }
+
+/* ===== Trang deal chuẩn SEO ===== */
+.deals-hero { text-align: center; padding: 2rem 0 1rem; }
+.deals-hero h1 { font-size: 1.8rem; margin: 0 0 .5rem; color: var(--ink); }
+.deals-hero p { color: var(--muted); margin: 0 auto; max-width: 640px; }
+.deals-updated { font-size: .82rem; color: var(--pink-text); font-weight: 700; margin-top: .6rem; }
+.deal-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem; margin: 1.4rem 0 2rem;
+}
+.deal-card {
+  display: flex; flex-direction: column; background: #fff;
+  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 14px rgba(255,61,119,.06); transition: transform .12s ease, box-shadow .12s ease;
+}
+.deal-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.deal-thumb { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: var(--bg-alt); }
+.deal-body { padding: .7rem .8rem 1rem; display: flex; flex-direction: column; flex: 1; }
+.deal-cat { font-size: .72rem; font-weight: 700; color: var(--pink-text); text-transform: uppercase; letter-spacing: .3px; }
+.deal-name { font-size: .92rem; font-weight: 700; color: var(--ink); margin: .25rem 0 .4rem; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.deal-price { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.deal-price-new { font-size: 1.1rem; font-weight: 800; color: var(--pink); }
+.deal-price-old { font-size: .82rem; color: var(--muted); text-decoration: line-through; }
+.deal-badge { align-self: flex-start; margin-top: .3rem; background: #ffe6ef; color: var(--pink-text);
+  font-size: .74rem; font-weight: 800; padding: .12rem .5rem; border-radius: 999px; }
+.deal-note { font-size: .8rem; color: var(--muted); margin: .45rem 0 .7rem; }
+.deal-cta { margin-top: auto; display: inline-block; text-align: center; text-decoration: none;
+  background: var(--grad); color: #fff; font-weight: 700; font-size: .86rem;
+  padding: .55rem .8rem; border-radius: 10px; }
+.deal-cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.deals-empty { text-align: center; color: var(--muted); padding: 2rem 0; }
+
+@media (max-width: 560px) {
+  .deal-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+  .deal-name { font-size: .84rem; }
+  .deal-price-new { font-size: 1rem; }
+  .deals-hero h1 { font-size: 1.45rem; }
+}
